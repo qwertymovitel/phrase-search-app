@@ -1,4 +1,3 @@
-LOCATION: /phrase-search-app/backend/Dockerfile
 FROM node:18-alpine
 WORKDIR /app
 COPY package*.json ./
