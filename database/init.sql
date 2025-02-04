@@ -29,16 +29,3 @@ CREATE TABLE collection_phrases (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-Directory Structure:
-phrase-search-app/
-├── docker-compose.yml
-├── .env
-├── .gitignore
-├── frontend/
-│   ├── Dockerfile
-│   └── package.json
-├── backend/
-│   ├── Dockerfile
-│   └── package.json
-└── database/
-    └── init.sql
