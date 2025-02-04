@@ -4,6 +4,17 @@ CREATE TABLE videos (
     id SERIAL PRIMARY KEY,
     filename VARCHAR(255) NOT NULL,
     original_name VARCHAR(255) NOT NULL,
+    duration FLOAT NOT NULL,
+    resolution JSONB NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE video_segments (
+    id SERIAL PRIMARY KEY,
+    video_id INTEGER REFERENCES videos(id),
+    start_time FLOAT NOT NULL,
+    duration FLOAT NOT NULL,
+    path VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -16,18 +27,9 @@ CREATE TABLE subtitles (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+-- Add full text search capabilities
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+CREATE INDEX idx_subtitles_text_trgm ON subtitles USING gin(text gin_trgm_ops);
 
-CREATE TABLE collections (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
-    name VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE INDEX idx_subtitles_text ON subtitles USING gin(text gin_trgm_ops);
+-- Add timestamp-based search optimization
+CREATE INDEX idx_subtitles_time ON subtitles(video_id, start_time, end_time);
