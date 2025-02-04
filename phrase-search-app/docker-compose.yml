@@ -1,5 +1,4 @@
-LOCATION: /phrase-search-app/docker-compose.yml
-CONTENT:
+
 version: '3.8'
 
 services:
