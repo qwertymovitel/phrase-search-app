@@ -1,5 +1,4 @@
-LOCATION: /phrase-search-app/backend/package.json
-CONTENT:
+
 {
   "name": "phrase-search-backend",
   "version": "1.0.0",
